@@ -4,39 +4,35 @@ export class Tile {
     this.originalPosition = position;
     this.currentPosition = position;
     this.isEmpty = isEmpty;
-
-    this.calculatePosX();
-    this.calculatePosY();
-    this.calculateSourceX();
-    this.calculateSourceY();
-    this.calculateDestX();
-    this.calculateDestY();
+    this.calculateInitials();
 
     this.image = document.getElementById("bunny");
   }
-  calculatePosX() {
-    this.posX = Math.floor(this.currentPosition / this.gameOptions.tilesOnX);
+  calculateInitials() {
+    this.calculatePos();
+    this.calculateSource();
+    this.calculateDest();
   }
-  calculatePosY() {
-    this.posY = this.currentPosition % this.gameOptions.tilesOnX;
+  calculatePos() {
+    this.posY = Math.floor(this.currentPosition / this.gameOptions.tilesOnX);
+    this.posX = this.currentPosition % this.gameOptions.tilesOnX;
   }
-  calculateSourceX() {
+  calculateSource() {
     this.sourceX = this.posX * this.gameOptions.tileWidth;
-  }
-  calculateSourceY() {
     this.sourceY = this.posY * this.gameOptions.tileHeight;
   }
-  calculateDestX() {
+  calculateDest() {
     this.destX = this.posX * this.gameOptions.tileWidth;
-  }
-  calculateDestY() {
     this.destY = this.posY * this.gameOptions.tileHeight;
   }
-  update(posX, posY) {
-    this.posX = posX;
-    this.posY = posY;
-    this.calculateDestX();
-    this.calculateDestY();
+  recalculate() {
+    this.calculatePos();
+    this.calculateDest();
+  }
+  update(currentPosition) {
+    console.log(this.originalPosition + " update to " + currentPosition);
+    this.currentPosition = currentPosition;
+    this.recalculate();
     // if (input.includes("ArrowRight")) this.x++;
     // else if (input.includes("ArrowLeft")) this.x--;
     // else if (input.includes("ArrowDown")) this.y++;

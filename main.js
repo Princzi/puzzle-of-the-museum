@@ -25,7 +25,7 @@ window.addEventListener("load", function () {
       const emptyPosY = this.emptyTile.posY;
 
       if (this.input.keys.includes("ArrowRight")) {
-        this.swapWith(emptyPosX - 1, emptyPosY);
+        this.swapWith(emptyPosX - 1, emptyPosY); //n = y * w + x
         this.input.keys.splice(this.input.keys.indexOf("ArrowRight"), 1);
       } else if (this.input.keys.includes("ArrowLeft")) {
         this.swapWith(emptyPosX + 1, emptyPosY);
@@ -43,16 +43,20 @@ window.addEventListener("load", function () {
     swapWith(posX, posY) {
       if (this.canSwapWith(posX, posY)) {
         //console.log(" swap with " + posX + "," + posY);
-        console.log("swap");
+        console.log("swap with " + posX + "," + posY);
+
         const tileToSwap = this.tiles.find(
           (e) => e.posX === posX && e.posY === posY
         );
 
+        console.log(tileToSwap);
+
         const tempX = this.emptyTile.posX;
         const tempY = this.emptyTile.posY;
+        //n = y * w + x
 
-        this.emptyTile.update(posX, posY);
-        tileToSwap.update(tempX, tempY);
+        this.emptyTile.update(posY * this.gameOptions.tilesOnX + posX);
+        tileToSwap.update(tempY * this.gameOptions.tilesOnX + tempX);
         console.log(tileToSwap);
         console.log(this.emptyTile);
       }
