@@ -8,6 +8,9 @@ export class Tile {
 
     this.image = image; //document.getElementById("bunny");
   }
+  isOnOriginalPosition() {
+    return this.originalPosition === this.currentPosition;
+  }
   calculateInitials() {
     this.calculatePos();
     this.calculateSource();
