@@ -4,9 +4,15 @@ export class Tile {
     this.originalPosition = position;
     this.currentPosition = position;
     this.isEmpty = isEmpty;
-    this.calculateInitials();
 
     this.image = image; //document.getElementById("bunny");
+    const imgRect = image.getBoundingClientRect();
+    this.imageWidth = imgRect.width;
+    this.imageHeight = imgRect.height;
+    this.sourceTileWidth = this.imageWidth / this.gameOptions.tilesOnX;
+    this.sourceTileHeight = this.imageHeight / this.gameOptions.tilesOnY;
+
+    this.calculateInitials();
   }
   isOnOriginalPosition() {
     return this.originalPosition === this.currentPosition;
@@ -21,8 +27,8 @@ export class Tile {
     this.posX = this.currentPosition % this.gameOptions.tilesOnX;
   }
   calculateSource() {
-    this.sourceX = this.posX * this.gameOptions.tileWidth;
-    this.sourceY = this.posY * this.gameOptions.tileHeight;
+    this.sourceX = this.posX * this.sourceTileWidth;
+    this.sourceY = this.posY * this.sourceTileHeight;
   }
   calculateDest() {
     this.destX = this.posX * this.gameOptions.tileWidth;
@@ -38,20 +44,20 @@ export class Tile {
   }
   draw(ctx) {
     if (this.isEmpty) {
-      ctx.fillStyle = "gray";
-      ctx.fillRect(
-        this.destX,
-        this.destY,
-        this.gameOptions.tileWidth,
-        this.gameOptions.tileHeight
-      );
+      //   ctx.fillStyle = "gray";
+      //   ctx.fillRect(
+      //     this.destX,
+      //     this.destY,
+      //     this.gameOptions.tileWidth,
+      //     this.gameOptions.tileHeight
+      //   );
     } else {
       ctx.drawImage(
         this.image,
         this.sourceX, // source x
         this.sourceY, // source y
-        this.gameOptions.tileWidth, // source width
-        this.gameOptions.tileHeight, //source height
+        this.sourceTileWidth, // source width
+        this.sourceTileHeight, //source height
         this.destX, // destination x
         this.destY, // destination y
         this.gameOptions.tileWidth, // destination width

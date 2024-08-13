@@ -3,15 +3,61 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-#canvas1 {
-  border: 1px solid gray;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+html,
+body {
+  overflow: hidden;
 }
 
+#canvas1 {
+  /* border: 1px solid gray; */
+  /*position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);*/
+  background-color: lightgrey;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 150px auto 150px;
+  grid-template-rows: 100px auto 100px;
+  grid-template-areas:
+    "header header header"
+    "left gameplay right"
+    "bottom bottom bottom";
+  width: 100%;
+  height: 100vh;
+}
+
+.main-grid .header {
+  border: 1px solid red;
+  grid-area: header;
+}
+.main-grid .left {
+  border: 1px solid blue;
+  grid-area: left;
+}
+.main-grid #gameplay {
+  border: 1px solid brown;
+  grid-area: gameplay;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-grid .right {
+  border: 1px solid yellow;
+  grid-area: right;
+}
+.main-grid .bottom {
+  border: 1px solid black;
+  grid-area: bottom;
+}
+
+/* .main-grid > div {
+  border: 1px solid red;
+} */
+
 .asset {
-  display: none;
+  visibility: hidden;
+  position: absolute;
 }
