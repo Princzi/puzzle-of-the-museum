@@ -1,12 +1,12 @@
 export class Tile {
-  constructor(gameOptions, position, isEmpty) {
+  constructor(gameOptions, position, isEmpty, image) {
     this.gameOptions = gameOptions;
     this.originalPosition = position;
     this.currentPosition = position;
     this.isEmpty = isEmpty;
     this.calculateInitials();
 
-    this.image = document.getElementById("bunny");
+    this.image = image; //document.getElementById("bunny");
   }
   calculateInitials() {
     this.calculatePos();
@@ -30,13 +30,8 @@ export class Tile {
     this.calculateDest();
   }
   update(currentPosition) {
-    console.log(this.originalPosition + " update to " + currentPosition);
     this.currentPosition = currentPosition;
     this.recalculate();
-    // if (input.includes("ArrowRight")) this.x++;
-    // else if (input.includes("ArrowLeft")) this.x--;
-    // else if (input.includes("ArrowDown")) this.y++;
-    // else if (input.includes("ArrowUp")) this.y--;
   }
   draw(ctx) {
     if (this.isEmpty) {
