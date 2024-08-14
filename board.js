@@ -2,9 +2,9 @@ import { Tile } from "./tile.js";
 import { keyActions } from "./keyActions.js";
 
 export class Board {
-  constructor(gameOptions, imageId) {
+  constructor(gameOptions, img) {
     this.gameOptions = gameOptions;
-    this.image = document.getElementById(imageId);
+    this.img = img;
     this.tiles = [];
     this.createTiles();
     this.keyActions = keyActions;
@@ -12,7 +12,7 @@ export class Board {
   createTiles() {
     for (var i = 0; i < this.gameOptions.tileCount; i++) {
       const isEmptyTile = i === this.gameOptions.tileCount - 1;
-      const tile = new Tile(this.gameOptions, i, isEmptyTile, this.image);
+      const tile = new Tile(this.gameOptions, i, isEmptyTile, this.img);
       this.tiles.push(tile);
     }
     this.emptyTile = this.tiles[this.tiles.length - 1];

@@ -6,6 +6,7 @@
 html,
 body {
   overflow: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #canvas1 {
@@ -16,7 +17,12 @@ body {
   transform: translate(-50%, -50%);*/
   background-color: lightgrey;
 }
-
+h1 {
+  font-weight: normal;
+}
+button {
+  padding: 5px;
+}
 .main-grid {
   display: grid;
   grid-template-columns: 150px auto 150px;
@@ -30,27 +36,40 @@ body {
 }
 
 .main-grid .header {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   grid-area: header;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .main-grid .left {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   grid-area: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .main-grid #gameplay {
-  border: 1px solid brown;
+  /* border: 1px solid brown; */
   grid-area: gameplay;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .main-grid .right {
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
   grid-area: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .main-grid .bottom {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   grid-area: bottom;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 /* .main-grid > div {

@@ -1,41 +1,48 @@
-//import { InputHandler } from "./input.js";
+import { paintings } from "./paintings.js";
 import { GameOptions } from "./gameOptions.js";
 import { Game } from "./game.js";
 
 window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
-  const gameOptions = new GameOptions();
+  var puzzleIndex = 0;
+  var game = null;
 
-  //const imageId = "dancers-in-blue"; //
-  const imageId = "cafe-terrace"; //
+  document.getElementById("next-puzzle").addEventListener("click", function () {
+    if (puzzleIndex < paintings.length - 1) {
+      puzzleIndex++;
+      console.log("next puzzle" + puzzleIndex);
+      loadGame();
+    }
+  });
+  document.getElementById("prev-puzzle").addEventListener("click", function () {
+    if (puzzleIndex > 0) {
+      puzzleIndex--;
+      console.log("prev puzzle" + puzzleIndex);
+      loadGame();
+    }
+  });
 
-  // canvas.addEventListener('click', function() { }, false);
-  const image = document.getElementById(imageId);
-  //console.log(image.getBoundingClientRect());
-  const imgRect = image.getBoundingClientRect();
-  const imgRatio = imgRect.width / imgRect.height;
-  const gameplayRect = document
-    .getElementById("gameplay")
-    .getBoundingClientRect();
-  console.log(window.innerHeight + "x" + window.innerWidth);
-  console.log(gameplayRect);
-
-  const isVertical = imgRect.height >= imgRect.width;
-
-  if (isVertical) {
-    const boardHeight = gameplayRect.height;
-    const boardWidth = imgRatio * boardHeight;
-    gameOptions.setBoardSize(boardWidth, boardHeight);
-  }
-
-  canvas.width = gameOptions.boardWidth;
-  canvas.height = gameOptions.boardHeight;
-
-  //image.
-
-  const game = new Game(gameOptions, imageId);
   //console.log(game);
+
+  function loadGame() {
+    const painting = paintings[puzzleIndex];
+    const image = document.getElementById(painting.assetId);
+    const divElement = document.getElementById("gameplay");
+
+    const gameOptions = new GameOptions(4, 4, image, divElement);
+
+    canvas.width = gameOptions.boardWidth;
+    canvas.height = gameOptions.boardHeight;
+
+    game = new Game(gameOptions, image);
+    const paintingName = document.getElementById("painting-name");
+    paintingName.innerText = painting.title;
+    const paintingYear = document.getElementById("painting-year");
+    paintingYear.innerText = painting.year;
+    const paintingAuthor = document.getElementById("painting-author");
+    paintingAuthor.innerText = painting.author;
+  }
 
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -43,10 +50,12 @@ window.addEventListener("load", function () {
     game.draw(ctx);
     requestAnimationFrame(animate);
   }
+
+  loadGame();
   animate();
 });
 
 window.addEventListener("resize", (event) => {
-  console.log(window.innerHeight + "x" + window.innerWidth);
-  console.log(document.getElementById("gameplay").getBoundingClientRect());
+  // console.log(window.innerHeight + "x" + window.innerWidth);
+  // console.log(document.getElementById("gameplay").getBoundingClientRect());
 });

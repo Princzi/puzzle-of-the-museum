@@ -4,13 +4,7 @@ export class Tile {
     this.originalPosition = position;
     this.currentPosition = position;
     this.isEmpty = isEmpty;
-
-    this.image = image; //document.getElementById("bunny");
-    const imgRect = image.getBoundingClientRect();
-    this.imageWidth = imgRect.width;
-    this.imageHeight = imgRect.height;
-    this.sourceTileWidth = this.imageWidth / this.gameOptions.tilesOnX;
-    this.sourceTileHeight = this.imageHeight / this.gameOptions.tilesOnY;
+    this.image = image;
 
     this.calculateInitials();
   }
@@ -27,6 +21,11 @@ export class Tile {
     this.posX = this.currentPosition % this.gameOptions.tilesOnX;
   }
   calculateSource() {
+    const rect = this.image.getBoundingClientRect();
+    this.imageWidth = rect.width;
+    this.imageHeight = rect.height;
+    this.sourceTileWidth = this.imageWidth / this.gameOptions.tilesOnX;
+    this.sourceTileHeight = this.imageHeight / this.gameOptions.tilesOnY;
     this.sourceX = this.posX * this.sourceTileWidth;
     this.sourceY = this.posY * this.sourceTileHeight;
   }

@@ -1,3 +1,13 @@
+export class Painting {
+  constructor(title, author, year, description, assetId) {
+    this.title = title;
+    this.author = author;
+    this.year = year;
+    this.description = description;
+    this.assetId = assetId;
+  }
+}
+
 export const paintings = [
   new Painting(
     "Dancers in Blue",
@@ -13,14 +23,5 @@ export const paintings = [
     "",
     "cafe-terrace"
   ),
+  new Painting("Desperate Man", "Gustave Courbet", 1845, "", "desperate-man"),
 ];
-
-export class Painting {
-  constructor(title, author, year, description, assetId) {
-    this.title = title;
-    this.author = author;
-    this.year = year;
-    this.description = description;
-    this.assetId = assetId;
-  }
-}

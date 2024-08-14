@@ -2,10 +2,10 @@ import { InputHandler } from "./input.js";
 import { Board } from "./board.js";
 
 export class Game {
-  constructor(gameOptions, imageId) {
+  constructor(gameOptions, img) {
     this.gameOptions = gameOptions;
-    this.image = document.getElementById(imageId);
-    this.board = new Board(gameOptions, imageId);
+    this.img = img;
+    this.board = new Board(gameOptions, img);
     this.input = new InputHandler();
   }
   update() {
