@@ -1,3 +1,5 @@
+import { MovingFunction } from "./movingFunction.js";
+
 export class Tile {
   constructor(gameOptions, position, isEmpty, image) {
     this.gameOptions = gameOptions;
@@ -5,6 +7,7 @@ export class Tile {
     this.currentPosition = position;
     this.isEmpty = isEmpty;
     this.image = image;
+    this.movingFunction = new MovingFunction();
 
     this.calculateInitials();
   }
@@ -12,9 +15,12 @@ export class Tile {
     return this.originalPosition === this.currentPosition;
   }
   calculateInitials() {
+    this.arrivedOnPosition = true;
     this.calculatePos();
     this.calculateSource();
     this.calculateDest();
+    this.x = this.destX;
+    this.y = this.destY;
   }
   calculatePos() {
     this.posY = Math.floor(this.currentPosition / this.gameOptions.tilesOnX);
@@ -37,9 +43,24 @@ export class Tile {
     this.calculatePos();
     this.calculateDest();
   }
-  update(currentPosition) {
+  setPosition(currentPosition) {
     this.currentPosition = currentPosition;
     this.recalculate();
+    this.arrivedOnPosition = false;
+
+    if (this.isEmpty) return;
+  }
+  update() {
+    if (this.isEmpty || (this.x === this.destX && this.y === this.destY)) {
+      this.arrivedOnPosition = true;
+      this.movingFunction.reset();
+      return;
+    }
+
+    if (this.x !== this.destX)
+      this.x = this.movingFunction.moveToDestination(this.x, this.destX);
+    if (this.y !== this.destY)
+      this.y = this.movingFunction.moveToDestination(this.y, this.destY);
   }
   draw(ctx) {
     if (this.isEmpty) {
@@ -57,8 +78,8 @@ export class Tile {
         this.sourceY, // source y
         this.sourceTileWidth, // source width
         this.sourceTileHeight, //source height
-        this.destX, // destination x
-        this.destY, // destination y
+        this.x, // destination x
+        this.y, // destination y
         this.gameOptions.tileWidth, // destination width
         this.gameOptions.tileHeight //destination height
       );

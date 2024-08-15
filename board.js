@@ -8,6 +8,10 @@ export class Board {
     this.tiles = [];
     this.createTiles();
     this.keyActions = keyActions;
+    this.moving = false;
+
+    this.slideAudio = document.getElementById("slide");
+    this.cantSlideAudio = document.getElementById("cant-slide");
   }
   createTiles() {
     for (var i = 0; i < this.gameOptions.tileCount; i++) {
@@ -16,13 +20,7 @@ export class Board {
       this.tiles.push(tile);
     }
     this.emptyTile = this.tiles[this.tiles.length - 1];
-  }
-  swipeToPosition(x, y) {
-    if (!this.canSwipeToPosition(x, y)) return;
-    const tileToSwipe = this.tiles.find((e) => e.posX === x && e.posY === y);
-    const emptyTileCurrentPosition = this.emptyTile.currentPosition;
-    this.emptyTile.update(tileToSwipe.currentPosition);
-    tileToSwipe.update(emptyTileCurrentPosition);
+    this.tileToSwipe = null;
   }
   canSwipeToPosition(x, y) {
     return (
@@ -36,18 +34,42 @@ export class Board {
     return this.tiles.every((e) => e.isOnOriginalPosition());
   }
   update(keys) {
+    if (this.moving) {
+      this.emptyTile.update();
+      this.tileToSwipe.update();
+
+      if (this.tileToSwipe.arrivedOnPosition === true) {
+        this.moving = false;
+        this.tileToSwipe = null;
+        if (this.isOnOriginalPosition()) {
+          setTimeout(() => {
+            alert("isOnOriginalPosition!!!");
+          }, "10");
+        }
+      }
+    }
+
     const key = keys.length ? keys[0] : null;
-    if (key) {
+    if (!this.moving && key) {
       keys.splice(0, 1);
       const keyAction = this.keyActions.find((e) => e.key === key);
       const x = keyAction.onX(this.emptyTile.posX);
       const y = keyAction.onY(this.emptyTile.posY);
-      this.swipeToPosition(x, y);
-      if (this.isOnOriginalPosition()) {
-        setTimeout(() => {
-          alert("isOnOriginalPosition!!!");
-        }, "10");
+
+      if (!this.canSwipeToPosition(x, y)) {
+        this.cantSlideAudio.play();
+        return;
       }
+      this.tileToSwipe = this.tiles.find((e) => e.posX === x && e.posY === y);
+      const emptyTileCurrentPosition = this.emptyTile.currentPosition;
+      this.emptyTile.setPosition(this.tileToSwipe.currentPosition);
+
+      this.tileToSwipe.setPosition(emptyTileCurrentPosition);
+      this.slideAudio.play();
+
+      this.emptyTile.update();
+      this.tileToSwipe.update();
+      this.moving = true;
     }
   }
   draw(ctx) {
