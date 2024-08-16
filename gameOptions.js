@@ -23,10 +23,4 @@ export class GameOptions {
     this.tileWidth = this.boardWidth / this.tilesOnX;
     this.tileHeight = this.boardHeight / this.tilesOnY;
   }
-  //   setBoardSize(boardWidth, boardHeight) {
-  //     this.boardWidth = boardWidth;
-  //     this.boardHeight = boardHeight;
-  //     this.tileWidth = this.boardWidth / this.tilesOnX;
-  //     this.tileHeight = this.boardHeight / this.tilesOnY;
-  //   }
 }

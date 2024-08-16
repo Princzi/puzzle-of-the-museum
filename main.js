@@ -22,6 +22,18 @@ window.addEventListener("load", function () {
       loadGame();
     }
   });
+  document.getElementById("peek").addEventListener("mousedown", function () {
+    const painting = paintings[puzzleIndex];
+    console.log("mousedown");
+    const paintingPeek = document.getElementById(painting.assetId + "-peek");
+    paintingPeek.style.display = "block";
+
+    //game.boardWidth
+    paintingPeek.style.width = "" + game.boardWidth / 4 + "px";
+    // setTimeout(() => {
+    //   paintingPeek.style.display = "none";
+    // }, "3000");
+  });
 
   //console.log(game);
 
@@ -30,7 +42,12 @@ window.addEventListener("load", function () {
     const image = document.getElementById(painting.assetId);
     const divElement = document.getElementById("gameplay");
 
-    const gameOptions = new GameOptions(4, 4, image, divElement);
+    const gameOptions = new GameOptions(
+      painting.tilesOnX,
+      painting.tilesOnY,
+      image,
+      divElement
+    );
 
     canvas.width = gameOptions.boardWidth;
     canvas.height = gameOptions.boardHeight;
