@@ -42,9 +42,7 @@ export class Board {
         this.moving = false;
         this.tileToSwipe = null;
         if (this.isOnOriginalPosition()) {
-          setTimeout(() => {
-            alert("isOnOriginalPosition!!!");
-          }, "10");
+          return true;
         }
       }
     }

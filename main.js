@@ -8,18 +8,18 @@ window.addEventListener("load", function () {
   var puzzleIndex = 0;
   var game = null;
   const games = [];
+  const nextPuzzleButton = document.getElementById("next-puzzle");
+  const prevPuzzleButton = document.getElementById("prev-puzzle");
 
-  document.getElementById("next-puzzle").addEventListener("click", function () {
+  nextPuzzleButton.addEventListener("click", function () {
     if (puzzleIndex < paintings.length - 1) {
       puzzleIndex++;
-      console.log("next puzzle" + puzzleIndex);
       loadGame(puzzleIndex);
     }
   });
-  document.getElementById("prev-puzzle").addEventListener("click", function () {
+  prevPuzzleButton.addEventListener("click", function () {
     if (puzzleIndex > 0) {
       puzzleIndex--;
-      console.log("prev puzzle" + puzzleIndex);
       loadGame(puzzleIndex);
     }
   });
@@ -29,37 +29,15 @@ window.addEventListener("load", function () {
     const paintingPeek = document.getElementById(painting.assetId + "-peek");
     paintingPeek.style.display = "block";
 
-    //game.boardWidth
     paintingPeek.style.width = "" + game.boardWidth / 4 + "px";
     // setTimeout(() => {
     //   paintingPeek.style.display = "none";
     // }, "3000");
   });
 
-  //console.log(game);
-
   function loadGame(puzzleIndex) {
     if (games.length <= puzzleIndex) {
-      // trzeba stworzyc i dodac grę
-      const painting = paintings[puzzleIndex];
-      const image = document.getElementById(painting.assetId);
-      const divElement = document.getElementById("gameplay");
-
-      const gameOptions = new GameOptions(
-        painting.tilesOnX,
-        painting.tilesOnY,
-        image,
-        divElement
-      );
-
-      const game = new Game(gameOptions, image);
-      const paintingName = document.getElementById("painting-name");
-      paintingName.innerText = painting.title;
-      const paintingYear = document.getElementById("painting-year");
-      paintingYear.innerText = painting.year;
-      const paintingAuthor = document.getElementById("painting-author");
-      paintingAuthor.innerText = painting.author;
-
+      const game = new Game(puzzleIndex);
       games.push(game);
     }
 
@@ -68,6 +46,26 @@ window.addEventListener("load", function () {
 
     canvas.width = game.gameOptions.boardWidth;
     canvas.height = game.gameOptions.boardHeight;
+    /*
+     nextPuzzleButton.addEventListener("click", function () {
+    if (puzzleIndex < paintings.length - 1) {
+      puzzleIndex++;
+      loadGame(puzzleIndex);
+    }
+  });
+  prevPuzzleButton.addEventListener("click", function () {
+    if (puzzleIndex > 0) {
+      puzzleIndex--;
+      loadGame(puzzleIndex);
+    }
+  });
+    */
+    if (puzzleIndex < paintings.length - 1 && game.solved === true) {
+      nextPuzzleButton.disabled = false;
+    }
+    if (puzzleIndex > 0) {
+      prevPuzzleButton.disabled = false;
+    }
   }
 
   function animate() {
