@@ -47,11 +47,17 @@ export class Tile {
     this.currentPosition = currentPosition;
     this.recalculate();
     this.arrivedOnPosition = false;
-
-    if (this.isEmpty) return;
+  }
+  isCollision(x, y) {
+    return (
+      x >= this.x &&
+      x <= this.x + this.gameOptions.tileWidth &&
+      y >= this.y &&
+      y <= this.y + this.gameOptions.tileHeight
+    );
   }
   update() {
-    if (this.isEmpty || (this.x === this.destX && this.y === this.destY)) {
+    if (this.x === this.destX && this.y === this.destY) {
       this.arrivedOnPosition = true;
       this.movingFunction.reset();
       return;
@@ -64,10 +70,10 @@ export class Tile {
   }
   draw(ctx) {
     if (this.isEmpty) {
-      //   ctx.fillStyle = "gray";
+      //   ctx.fillStyle = "red";
       //   ctx.fillRect(
-      //     this.destX,
-      //     this.destY,
+      //     this.x,
+      //     this.y,
       //     this.gameOptions.tileWidth,
       //     this.gameOptions.tileHeight
       //   );

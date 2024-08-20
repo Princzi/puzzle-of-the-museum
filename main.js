@@ -11,18 +11,9 @@ window.addEventListener("load", function () {
   const nextPuzzleButton = document.getElementById("next-puzzle");
   const prevPuzzleButton = document.getElementById("prev-puzzle");
 
-  nextPuzzleButton.addEventListener("click", function () {
-    if (puzzleIndex < paintings.length - 1) {
-      puzzleIndex++;
-      loadGame(puzzleIndex);
-    }
-  });
-  prevPuzzleButton.addEventListener("click", function () {
-    if (puzzleIndex > 0) {
-      puzzleIndex--;
-      loadGame(puzzleIndex);
-    }
-  });
+  nextPuzzleButton.addEventListener("click", () => loadGame(++puzzleIndex));
+  prevPuzzleButton.addEventListener("click", () => loadGame(--puzzleIndex));
+
   document.getElementById("peek").addEventListener("mousedown", function () {
     const painting = paintings[puzzleIndex];
     console.log("mousedown");
@@ -46,26 +37,6 @@ window.addEventListener("load", function () {
 
     canvas.width = game.gameOptions.boardWidth;
     canvas.height = game.gameOptions.boardHeight;
-    /*
-     nextPuzzleButton.addEventListener("click", function () {
-    if (puzzleIndex < paintings.length - 1) {
-      puzzleIndex++;
-      loadGame(puzzleIndex);
-    }
-  });
-  prevPuzzleButton.addEventListener("click", function () {
-    if (puzzleIndex > 0) {
-      puzzleIndex--;
-      loadGame(puzzleIndex);
-    }
-  });
-    */
-    if (puzzleIndex < paintings.length - 1 && game.solved === true) {
-      nextPuzzleButton.disabled = false;
-    }
-    if (puzzleIndex > 0) {
-      prevPuzzleButton.disabled = false;
-    }
   }
 
   function animate() {
