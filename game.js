@@ -8,6 +8,9 @@ export class Game {
     this.board = new Board(gameOptions, img);
     this.input = new InputHandler();
   }
+  load() {
+    this.input.keys = [];
+  }
   update() {
     this.board.update(this.input.keys);
   }
